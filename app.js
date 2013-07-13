@@ -24,7 +24,7 @@ app.configure(function () {
 routes = require('./routes/payment')(app);
 routes = require('./routes/project')(app);
 
-mongoose.connect('mongodb://localhost/commeetup', function(error, res) {
+mongoose.connect('mongodb://streetpay:bbhack@ds035338.mongolab.com:35338/streetpay', function(error, res) {
   if(error) {
     console.log('ERROR: connecting to StreetPay MongoDB Database. ' + error);
   } else {
@@ -32,6 +32,12 @@ mongoose.connect('mongodb://localhost/commeetup', function(error, res) {
   }
 });
 
-server.listen(3002, function() {
-  console.log("StreetPay node server running on http://localhost:3002");
+var port = process.env.PORT || 5000;
+
+server.listen(port, function() {
+  console.log("StreetPay node server running on port: "+port);
 });
+
+var mongoUri = process.env.MONGOLAB_URI || 
+  process.env.MONGOHQ_URL || 
+  'mongodb://localhost/mydb'; 
